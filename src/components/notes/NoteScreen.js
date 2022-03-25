@@ -22,7 +22,7 @@ export const NoteScreen = () => {
         <div className='notes__image'>
           <img 
             src='https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg'
-            alt='image'
+            alt=''
           />
         </div>
       </div>
