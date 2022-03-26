@@ -1,16 +1,21 @@
 // Types
 import { types } from "../types/types";
+// Helpers
+import { tokelessFetch } from "../helpers/fetch";
 
 export const startLogin = ( email, password ) => {
-  return ( dispatch ) => {
-    setTimeout(() => {
-      dispatch( login(123, 'Pedro') );
-    }, 3000)
+  return async() => {
+    const resp = await tokelessFetch( 'auth/login', { email, password }, 'POST' );
+    const body = await resp.json();
+
+    console.log(body)
   }
 }
 
 export const startRegister = ( email, password, name ) => {
+  return ( dispatch ) => {
 
+  }
 }
 
 export const login = ( uid, displayName ) => ({

@@ -8,16 +8,16 @@ import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
-  const [ formValues, handleInputChange ] = useForm({
-    email: 'test@test.com',
-    password: '123456'
+  const [ formLoginValues, handleLoginInputChange ] = useForm({
+    loginEmail: 'test1@test.com',
+    loginPassword: '123456'
   });
 
-  const { email, password } = formValues;
+  const { loginEmail, loginPassword } = formLoginValues;
 
   const handleLogin = ( e ) => {
     e.preventDefault();
-    dispatch( startLogin( email, password ) );
+    dispatch( startLogin( loginEmail, loginPassword ) );
   }
 
   return (
@@ -26,47 +26,29 @@ export const LoginScreen = () => {
 
       <form onSubmit={ handleLogin }>
         <input 
+          className='auth__input'
           type='text'
           placeholder='Email'
-          name='email'
+          name='loginEmail'
           autoComplete='off'
-          className='auth__input'
-          value={ email }
-          onChange={ handleInputChange }
+          value={ loginEmail }
+          onChange={ handleLoginInputChange }
         />
         <input 
+          className='auth__input'
           type='password'
           placeholder='Password'
-          name='password'
-          className='auth__input'
-          value={ password }
-          onChange={ handleInputChange }
+          name='loginPassword'
+          value={ loginPassword }
+          onChange={ handleLoginInputChange }
         />
 
         <button
+          className='btn btn-primary btn-block mb-5'
           type='submit'
-          className='btn btn-primary btn-block'
         >
           Login
         </button>
-        <hr />
-        <div className='auth__social-networks'>
-          <p>Login with social networks</p>
-          <div
-            className="google-btn"
-          >
-            <div className="google-icon-wrapper">
-              <img 
-                className="google-icon" 
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" 
-                alt="google button" 
-              />
-            </div>
-            <p className="btn-text">
-              <b>Sign in with google</b>
-            </p>
-          </div>
-        </div>
 
         <Link 
           to='/auth/register'
