@@ -4,6 +4,7 @@ export const types = {
   authStartLogin: '[Auth] Start Login', 
   authLogin: '[Auth] Login',
   authStartRegister: '[Auth] Start Register', 
+  authRegister: '[Auth] Login',
   authStartTokenRenew: '[Auth] Start Token Renew', 
   authLogout: '[Auth] Logout',
 

@@ -1,27 +1,48 @@
+import Swal from "sweetalert2";
 // Types
 import { types } from "../types/types";
 // Helpers
-import { tokelessFetch } from "../helpers/fetch";
+import { tokenlessFetch } from "../helpers/fetch";
 
 export const startLogin = ( email, password ) => {
-  return async() => {
-    const resp = await tokelessFetch( 'auth/login', { email, password }, 'POST' );
+  return async( dispatch ) => {
+    const resp = await tokenlessFetch( 'auth/login', { email, password }, 'POST' );
     const body = await resp.json();
+    console.log( body );
 
-    console.log(body)
+    if ( body.ok ) {
+      localStorage.setItem( 'token', body.token );
+      localStorage.setItem( 'token-init-date', new Date().getTime() );
+
+      dispatch( login({
+        uid: body.user.uid,
+        name: body.user.name,
+      }));
+    } else {
+      Swal.fire( 'Error', body.msg || body.errors.errors[0].msg, 'error' );
+    }
   }
 }
 
-export const startRegister = ( email, password, name ) => {
-  return ( dispatch ) => {
-
-  }
-}
-
-export const login = ( uid, displayName ) => ({
-  type: types.login,
-  payload: {
-    uid, 
-    displayName
-  }
+const login = ( user ) => ({
+  type: types.authLogin,
+  payload: user
 });
+
+
+export const startRegister = ( name, email, password ) => {
+  return async( dispatch ) => {
+    const resp = await tokenlessFetch( 'auth/register', { name, email, password }, 'POST' );
+    const body = await resp.json();
+    console.log(body);
+
+    if ( body.ok ) {
+      localStorage.setItem( 'token', body.token );
+      localStorage.setItem( 'token-init-date', new Date().getTime() );
+
+    } else {
+      Swal.fire( 'Error', body.msg || body.errors.errors[0].msg, 'error' );
+    }
+  }
+}
+

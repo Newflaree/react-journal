@@ -51,14 +51,13 @@ export const LoginScreen = () => {
         </button>
 
         <Link 
-          to='/auth/register'
           className='link'
+          to='/auth/register'
         >
           Create new account
         </Link>
 
       </form>
-
     </>
   )
 }

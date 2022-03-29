@@ -1,7 +1,7 @@
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-export const tokelessFetch = ( endpoint, data, method = 'GET' ) => {
+export const tokenlessFetch = ( endpoint, data, method = 'GET' ) => {
   const url = `${ baseUrl }/${ endpoint }`;
 
   if ( method === 'GET' ) {
@@ -15,5 +15,4 @@ export const tokelessFetch = ( endpoint, data, method = 'GET' ) => {
       body: JSON.stringify( data )
     });
   }
-
 }

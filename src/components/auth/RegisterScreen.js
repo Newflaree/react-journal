@@ -6,40 +6,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeError, setError } from '../../actions/ui';
 // Custom hooks
 import { useForm } from '../../hooks/useForm';
+import {startRegister} from '../../actions/auth';
 
 export const RegisterScreen = () => {
   const dispatch = useDispatch();
   const { msgError } = useSelector( state => state.ui );
 
-  const [ formValues, handleInputChange ] = useForm({
-    name: 'Evelyn',
-    email: 'ev@lyn.com',
-    password: '123456',
-    password2: '123456'
+  const [ formRegisterValues, handleRegisterInputChange ] = useForm({
+    registerName: 'Evelyn',
+    registerEmail: 'ev@lyn.com',
+    registerPassword: '123456',
+    registerPassword2: '123456'
   });
 
   const {
-    name,
-    email,
-    password,
-    password2
-  } = formValues;
+    registerName,
+    registerEmail,
+    registerPassword,
+    registerPassword2
+  } = formRegisterValues;
 
   const handleRegister = ( e ) => {
     e.preventDefault();
+    
     if ( isFormValid() ) {
-      console.log( 'Register Success' );
+      dispatch( startRegister( registerName, registerEmail, registerPassword, ) );
     }
   }
 
   const isFormValid = () => {
-    if ( name.trim().length === 0 ) {
+    if ( registerName.trim().length === 0 ) {
       dispatch( setError('Name is required') );
       return false;
-    } else if ( !validator.isEmail( email ) ) {
+    } else if ( !validator.isEmail( registerEmail ) ) {
       dispatch( setError('Email is not valid') );
       return false;
-    } else if ( password !== password2 || password.length < 6 ) {
+    } else if ( registerPassword !== registerPassword2 || registerPassword.length < 6 ) {
       dispatch( setError('Passwords are different and must be longer than 5 characters') );
       return false;
     }
@@ -56,58 +58,58 @@ export const RegisterScreen = () => {
         {
           msgError &&
           (
-            <div className='auth__alert-error'>
+            <div className='auth__alert-error text-center'>
               { msgError }
             </div>
           )
         }
 
         <input 
+          className='auth__input'
           type='text'
           placeholder='Name'
-          name='name'
+          name='registerName'
           autoComplete='off'
-          className='auth__input'
-          value={ name }
-          onChange={ handleInputChange }
+          value={ registerName }
+          onChange={ handleRegisterInputChange }
         />
         <input 
+          className='auth__input'
           type='text'
           placeholder='Email'
-          name='email'
+          name='registerEmail'
           autoComplete='off'
-          className='auth__input'
-          value={ email }
-          onChange={ handleInputChange }
+          value={ registerEmail }
+          onChange={ handleRegisterInputChange }
         />
         <input 
+          className='auth__input'
           type='password'
           placeholder='Password'
-          name='password'
-          className='auth__input'
-          value={ password }
-          onChange={ handleInputChange }
+          name='registerPassword'
+          value={ registerPassword }
+          onChange={ handleRegisterInputChange }
         />
         <input 
+          className='auth__input'
           type='password'
           placeholder='Confirm password'
-          name='password2'
-          className='auth__input'
-          value={ password2 }
-          onChange={ handleInputChange }
+          name='registerPassword2'
+          value={ registerPassword2 }
+          onChange={ handleRegisterInputChange }
         />
 
         <button
-          type='submit'
           className='btn btn-primary btn-block mb-5'
+          type='submit'
         >
           Register
         </button>
         <hr />
 
         <Link 
-          to='/auth/login'
           className='link'
+          to='/auth/login'
         >
           Already registered?
         </Link>
